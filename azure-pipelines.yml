@@ -151,18 +151,19 @@ stages:
             XUnitProjects: $(Build.SourcesDirectory)/src/Validation/tests/Validation.Tests.csproj
             XUnitTargetFramework: netcoreapp2.0
             XUnitRunnerVersion: 2.4.1
+            XUnitPublishTargetFramework: net5.0
             IncludeDotNetCli: true
             DotNetCliPackageType: sdk
-            DotNetCliVersion: 2.1.403
+            DotNetCliVersion: 5.0.101
             EnableXUnitReporter: true
             WaitForWorkItemCompletion: true
             ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
-              HelixTargetQueues: Windows.10.Amd64.Arcade.Open;Debian.9.Amd64.Arcade.Open
+              HelixTargetQueues: Windows.10.Amd64.Open;Debian.9.Amd64.Open
               HelixSource: pr/dotnet/arcade-validation/$(Build.SourceBranch)
               IsExternal: true
               Creator: arcade-validation
             ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-              HelixTargetQueues: Windows.10.Amd64.Arcade;Debian.9.Amd64.Arcade
+              HelixTargetQueues: Windows.10.Amd64;Debian.9.Amd64
               HelixSource: official/dotnet/arcade-validation/$(Build.SourceBranch)
               HelixAccessToken: $(HelixApiAccessToken)
         displayName: Validate Helix
